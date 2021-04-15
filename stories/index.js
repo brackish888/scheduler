@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 import "index.scss";
+import Form from "../src/components/Appointment/Form";
 import Error from "../src/components/Appointment/Error";
 import Status from "../src/components/Appointment/Status";
 import Confirm from "../src/components/Appointment/Confirm";
@@ -42,19 +43,36 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
   .add("Full", () => <DayListItem name="Monday" spots={0} />)
   .add("Clickable", () => (
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
-  ));
-  import Header from "../src/components/Appointment/Header";
-
-  .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
-  })
-  .add("Monday", () => (
-    <DayList days={days} day={"Monday"} setDay={action("setDay")} />
   ))
-  .add("Tuesday", () => (
-    <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
-  ));
 
+  const days = [
+    {
+      id: 1,
+      name: "Monday",
+      spots: 2,
+    },
+    {
+      id: 2,
+      name: "Tuesday",
+      spots: 5,
+    },
+    {
+      id: 3,
+      name: "Wednesday",
+      spots: 0,
+    },
+  ];
+
+  storiesOf("DayList", module)
+    .addParameters({
+      backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
+    })
+    .add("Monday", () => (
+      <DayList days={days} day={"Monday"} setDay={action("setDay")} />
+    ))
+    .add("Tuesday", () => (
+      <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
+    ));
 
 const interviewer = {
   id: 1,
@@ -83,7 +101,15 @@ storiesOf("InterviewerListItem", module)
       selected
       setInterviewer={event => action("setInterviewer")(interviewer.id)}
     />
-  ));
+  ))
+  .add("Clickable", () => (
+    <InterviewerListItem
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      setInterviewer={event => action("setInterviewer")(interviewer.id)}  
+      />
+  ));;
 
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
@@ -123,4 +149,22 @@ storiesOf("Appointment", module)
   .add('Confirm', () => <Confirm message='Remove your appointment?' onConfirm={action('onConfirm')} onCancel={action('onCancel')} />)
   .add('Status', () => <Status message='Deleting' />)
   .add('Error', () => <Error message="Could not delete appointment." onClose={action('onClose')} />)
+  .add("Create", () => <Form interviewers={interviewers} onSave={action('onSave')} onCancel={action('onCancel')} /> )
+  .add("Edit", () => <Form name interviewers={interviewers} interviewer={interviewers.id} onSave={action("onSave")} onCancel={action('onCancel')} />)
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointment id={1} time="12pm" />
+      <Appointment id="last" time="1pm" />
+    </Fragment>
+  ))
+  .add("Appointment Booked", () => (
+    <Fragment>
+      <Appointment
+        id={1}
+        time="12pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
+      />
+      <Appointment id="last" time="1pm" />
+    </Fragment>
+  ))
   ;
