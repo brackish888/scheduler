@@ -32,27 +32,29 @@ export default function useApplicationData() {
     });
   }, []);
 
-  function updateSpots(day) {
-    console.log("state", state);
-    console.log("day", day);
-    if (state.appointments) {
-      const dayFound = state.days.find((eachDay) => eachDay.name === day);
-      console.log("dayFound", dayFound);
-      const emptyAppointments = dayFound.appointments.filter(
-        (appointmentId, id) =>
-          state.appointments[appointmentId].interview === null
-      );
-      console.log("dayFound.appointments", dayFound.appointments);
-      console.log("emptyApp", emptyAppointments);
-
-      //return emptyAppointments.length;
-      const daysSpots = [...state.days];
-
-      console.log("daySpots", daysSpots);
-      dayFound.spots = emptyAppointments.length;
-
-      return daysSpots;
+  const getSpotsForDay = function (dayObj, appointments) {
+    let spots = 0;
+    for (const id of dayObj.appointments) {
+      const appointment = appointments[id];
+      console.log("appointment.interview", appointment.interview);
+      if (!appointment.interview) {
+        spots++;
+      }
     }
+    console.log("spots", spots);
+    console.log("dayObj", dayObj);
+    return spots;
+  };
+  function updateSpots(dayName, days, appointments) {
+    //find the day Object
+    const dayObj = days.find((day) => day.name === dayName);
+    //determine spot for day
+    const spots = getSpotsForDay(dayObj, appointments);
+    console.log(
+      "return",
+      days.map((day) => (day.name === dayName ? { ...dayObj, spots } : day))
+    );
+    return days.map((day) => (day.name === dayName ? { ...day, spots } : day));
   }
   function bookInterview(id, interview) {
     const appointment = {
@@ -65,11 +67,15 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    const dayCount = updateSpots(state.day, id);
-
     return axios
       .put(`/api/appointments/${id}`, appointment)
-      .then(() => setState({ ...state, appointments, days: dayCount }))
+      .then(() =>
+        setState({
+          ...state,
+          appointments,
+          days: updateSpots(state.day, state.days, appointments),
+        })
+      )
       .catch((error) => console.error(error));
   }
 
