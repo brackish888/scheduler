@@ -10,8 +10,11 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
-  const setDay = (day) =>
+  const setDay = (day) => {
+    console.log("Start", state.days);
     setState((priorState) => ({ ...priorState, day: day }));
+    console.log("Stop", state.days);
+  };
 
   useEffect(() => {
     const daysUrl = axios.get(`/api/days`);

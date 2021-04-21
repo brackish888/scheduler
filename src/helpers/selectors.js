@@ -14,7 +14,6 @@ export function getAppointmentsForDay(state, day) {
       return { ...state.appointments[appId] };
     }
   });
-
   return newArr;
 }
 
@@ -50,6 +49,6 @@ export function getInterviewersForDay(state, day) {
     if (state.interviewers[interviewId]) {
       return { ...state.interviewers[interviewId] };
     }
-    return newArr;
   });
+  return newArr;
 }
