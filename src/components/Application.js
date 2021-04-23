@@ -1,6 +1,4 @@
-// import React from "react";
 import React from "react";
-// import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
