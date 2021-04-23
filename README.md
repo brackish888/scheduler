@@ -31,10 +31,10 @@ If any of these are missing you can install them with `npm install <package> --s
 
 # Final result
 
-["Initial page start on Monday"](https://github.com/brackish888/scheduler/blob/master/docs/Opening-page.png?raw=true)
-["Create or Edit an appointment"](https://github.com/brackish888/scheduler/blob/master/docs/Create-Edit.png?raw=true)
-["Resulting in a new appointment!"](https://github.com/brackish888/scheduler/blob/master/docs/NewAppointment.png?raw=true)
-["Or Delete it"](https://github.com/brackish888/scheduler/blob/master/docs/DeleteAppointment.png?raw=true)
+!["Initial page start on Monday"](https://github.com/brackish888/scheduler/blob/master/docs/Opening-page.png?raw=true)
+!["Create or Edit an appointment"](https://github.com/brackish888/scheduler/blob/master/docs/Create-Edit.png?raw=true)
+!["Resulting in a new appointment!"](https://github.com/brackish888/scheduler/blob/master/docs/NewAppointment.png?raw=true)
+!["Or Delete it"](https://github.com/brackish888/scheduler/blob/master/docs/DeleteAppointment.png?raw=true)
 
 ## Running Webpack Development Server
 
